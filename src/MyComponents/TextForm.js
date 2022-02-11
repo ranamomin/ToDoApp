@@ -13,6 +13,38 @@ export default function TextForm(props) {
     const handleClearClick = (event) => {
       setText("");
     };
+    const handleCopyClick = (event) => {
+      let text = document.getElementById("myBox");
+      text.select()
+      try {
+        let successful = document.execCommand("copy");
+        let msg = successful ? "successful" : "unsuccessful";
+        console.log("Fallback: Copying text command was " + msg);
+        let button = document.getElementById("btnCopyID");
+        let buttonText = button.textContent;
+        let btnClassname = button.className;
+        
+        // Copy Text
+        button.innerText = "Copied!";
+        // btn btn-primary my-3 mx-2
+        button.className = "btn btn-success my-3 mx-2";
+        setTimeout(()=>{
+          button.innerText = buttonText ;
+          button.className = btnClassname;
+        },2000)
+
+      } catch (err) {
+        console.error("Fallback: Oops, unable to copy", err);
+      }
+    };
+    const handleRemoveExtraSpacesClick = () =>{
+      // using regex to look for more than 1 space and split the text into an array
+      let newText = text.split(/[  ]+/);
+      // join the array with single space
+      setText(newText.join(" "));
+
+    }
+
     const [text, setText] = useState("Enter text here");
   return (
     <>
@@ -35,6 +67,19 @@ export default function TextForm(props) {
           onClick={handleLowerClick}
         >
           Convert to Lowercase
+        </button>
+        <button
+          className="btn btn-primary my-3 mx-2"
+          onClick={handleRemoveExtraSpacesClick}
+        >
+          Remove Extra Spaces
+        </button>
+        <button
+          className="btn btn-primary my-3 mx-2"
+          id="btnCopyID"
+          onClick={handleCopyClick}
+        >
+          Copy Text
         </button>
         <button
           className="btn btn-primary my-3 mx-2"
