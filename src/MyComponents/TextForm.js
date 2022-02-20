@@ -45,10 +45,13 @@ export default function TextForm(props) {
 
     }
 
-    const [text, setText] = useState("Enter text here");
+    const [text, setText] = useState("");
   return (
     <>
-      <div className="container">
+      <div
+        className="container"
+        style={{ color: props.mode === "dark" ? "white" : "#0b1b3c" }}
+      >
         <h1>{props.heading}</h1>
         <div className="mb--3">
           <textarea
@@ -57,6 +60,10 @@ export default function TextForm(props) {
             rows="8"
             value={text}
             onChange={handleOnChange}
+            style={{
+              backgroundColor: props.mode === "light" ? "white" : "#212529",
+              color: props.mode === "dark" ? "white" : "#0b1b3c",
+            }}
           ></textarea>
         </div>
         <button className="btn btn-primary my-3" onClick={handleUpClick}>
@@ -88,16 +95,22 @@ export default function TextForm(props) {
           Clear Text
         </button>
       </div>
-      <div className="container my-2">
+      <div
+        className="container my-2"
+        style={{ color: props.mode === "dark" ? "white" : "#0b1b3c" }}
+      >
         <h1>Your text summary</h1>
         <p>
           {text.split(" ").length} words and {text.length} characters
         </p>
         <p>{0.008 * text.split(" ").length} minutes read</p>
       </div>
-      <div className="container my-2">
+      <div
+        className="container my-2"
+        style={{ color: props.mode === "dark" ? "white" : "#0b1b3c" }}
+      >
         <h1>Preview</h1>
-        <p>{text}</p>
+        <p>{text.length > 0 ? text : "Enter text to preview it here"}</p>
       </div>
     </>
   );
