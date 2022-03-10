@@ -28,7 +28,7 @@ function App() {
               <Route exact path="/about" element={<About mode={mode}/>} />
             </Route>
             <Route
-              path="/"
+              exact path="/"
               element={<TextForm heading="Enter your text below" mode={mode} />}
             >
               <Route
