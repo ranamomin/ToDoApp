@@ -1,9 +1,10 @@
 
 import React, { useState } from 'react';
 import './App.css';
+import About from './MyComponents/About';
 import Header from './MyComponents/Header';
 import TextForm from './MyComponents/TextForm';
-
+import { BrowserRouter as Router, Routes, Route} from "react-router-dom";
 
 function App() {
   const [mode,setMode] = useState('light');
@@ -19,10 +20,29 @@ function App() {
   }
   return (
     <>
-      <Header title="Texttastic" mode={mode} toggleMode={toggleMode}/>
-      <div className="container my-3">
-        <TextForm heading="Enter your text below" mode={mode}/>
-      </div>
+      <Router>
+        <Header title="Texttastic" mode={mode} toggleMode={toggleMode} />
+        <div className="container my-3">
+          <Routes>
+            <Route path="/about" element={<About mode={mode}/>}>
+              <Route exact path="/about" element={<About mode={mode}/>} />
+            </Route>
+            <Route
+              path="/"
+              element={<TextForm heading="Enter your text below" mode={mode} />}
+            >
+              <Route
+                exact
+                path="/about"
+                element={
+                  <TextForm heading="Enter your text below" mode={mode} />
+                }
+              />
+            </Route>
+          </Routes>
+          {/* <TextForm heading="Enter your text below" mode={mode}/> */}
+        </div>
+      </Router>
     </>
   );
 }
